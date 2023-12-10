@@ -46,17 +46,15 @@ public class FileReader {
 
         }
 
-        Profile profile = new Profile(
+        Profile profile = new Profile();
 
-                profileFields[0],
+        profile.setName(profileFields[0]);
 
-                Integer.parseInt(profileFields[1]),
+        profile.setAge(Integer.parseInt(profileFields[1]));
 
-                profileFields[2],
+        profile.setEmail(profileFields[2]);
 
-                Long.parseLong(profileFields[3])
-
-        );
+        profile.setPhone(Long.parseLong(profileFields[3]));
 
         return profile;
 
