@@ -1,14 +1,11 @@
 package com.epam.mjc.io;
 
-import java.io.IOException;
+public class FileReaderException extends Exception {
 
-public class FileReaderException extends IOException {
+    public FileReaderException(String message, Throwable cause) {
 
-    public FileReaderException(String message) {
-
-        super(message);
+        super(message, cause);
 
     }
-
 
 }

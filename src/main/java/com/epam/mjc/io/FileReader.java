@@ -4,14 +4,17 @@ import java.io.File;
 
 import java.io.FileInputStream;
 
-import java.io.IOException;
-
-
 public class FileReader {
 
     public Profile getDataFromFile(File file)  {
 
         StringBuilder profileData = new StringBuilder();
+
+        String name = null;
+        Integer age = null;
+        String email = null;
+        Long phone = null;
+
 
         try(FileInputStream stream = new FileInputStream(file)) {
 
@@ -25,36 +28,54 @@ public class FileReader {
 
             String string = profileData.toString();
 
-            String[] splitStrings = string.split("\r\n");
+            if(string != null) {
 
-            String[] profileFields = new String[splitStrings.length];
+                String[] splitStrings = string.split("\r\n");
 
-            for (i = 0; i < splitStrings.length; i++) {
+                if (splitStrings.length == 4) {
 
-                String[] tempArray = splitStrings[i].split(" ");
+                    String[] profileFields = new String[splitStrings.length];
 
-                profileFields[i] = tempArray[1];
+                    for (i = 0; i < splitStrings.length; i++) {
+
+                        String[] tempArray = splitStrings[i].split(" ");
+
+                        if (tempArray.length == 2) {
+
+                            profileFields[i] = tempArray[1];
+
+                        }
+
+                    }
+
+                    if (profileFields.length == 4) {
+
+                        name = profileFields[0];
+                        age = Integer.parseInt(profileFields[1]);
+                        email = profileFields[2];
+                        phone = Long.parseLong(profileFields[3]);
+
+                    }
+
+                }
 
             }
 
-            return new Profile(profileFields[0],
-                    Integer.parseInt(profileFields[1]),
-                    profileFields[2],
-                    Long.parseLong(profileFields[3]));
+        } catch (Exception e) {
 
-        } catch (IOException e) {
-
-            try {
-                throw new FileReaderException("Problem with read file!");
-
-            } catch (FileReaderException ex) {
-
-                throw new RuntimeException(ex);
-
-            }
+           e.printStackTrace();
 
         }
 
+
+        return new Profile(name,
+
+                age,
+
+                email,
+
+                phone);
+        
     }
 
 }
